@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
   const addButton = document.getElementById('add-task-btn');
   const taskInput = document.getElementById('task-input');
   const taskList  = document.getElementById('task-list');
@@ -60,6 +59,19 @@ document.addEventListener('DOMContentLoaded', () => {
     taskInput.focus();
   }
 
+  // Extracted loadTasks function
+  function loadTasks() {
+    const storedTasks = getTasksFromLocalStorage();
+    if (storedTasks.length === 0) {
+      // If no tasks stored yet, add default tasks and save them
+      const initialTasks = ['English', 'French', 'Python'];
+      initialTasks.forEach(task => addTaskFromText(task, false));
+      saveTasksToLocalStorage(initialTasks);
+    } else {
+      storedTasks.forEach(task => addTaskFromText(task, false));
+    }
+  }
+
   addButton.addEventListener('click', () => addTask(false));
 
   taskInput.addEventListener('keypress', (event) => {
@@ -68,14 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Load tasks from Local Storage when page loads
-  const storedTasks = getTasksFromLocalStorage();
-  if (storedTasks.length === 0) {
-    // If no tasks stored yet, add default tasks and save them
-    const initialTasks = ['English', 'French', 'Python'];
-    initialTasks.forEach(task => addTaskFromText(task, false));
-    saveTasksToLocalStorage(initialTasks);
-  } else {
-    storedTasks.forEach(task => addTaskFromText(task, false));
-  }
+  // Call loadTasks to initialize the task list
+  loadTasks();
 });
