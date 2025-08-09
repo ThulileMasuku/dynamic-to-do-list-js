@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const removeBtn = document.createElement('button');
     removeBtn.textContent = 'Remove';
-    removeBtn.className = 'remove-btn';
+    removeBtn.classList.add('remove-btn'); // required by your test
 
     removeBtn.onclick = () => {
       li.remove();
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- Preload the initial tasks ---
+  // Preloaded tasks
   const initialTasks = ['English', 'French', 'Python'];
   initialTasks.forEach(task => addTaskFromText(task));
 });
